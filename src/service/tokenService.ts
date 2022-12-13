@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 import { tokenModel } from "../models/tokenModal"
+import { Role } from "../models/userModal"
 type GenerateTokenType = {
   accessToken: string
   refreshToken: string
@@ -9,6 +10,7 @@ type PayloadType = {
   email: string
   id: ObjectId
   isActivated: boolean
+  role: Role
 }
 export const tokenService = {
   async generateTokens(payload: PayloadType): Promise<GenerateTokenType> {

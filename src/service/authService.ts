@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt"
 import { ObjectId } from "mongodb"
 import { v4 } from "uuid"
-import { UserModel } from "../models/userModal"
+import { Role, UserModel } from "../models/userModal"
 import { ApiError } from "../utils/api-errors/api-error"
 import { mailService } from "./mailService"
 import { tokenService } from "./tokenService"
@@ -9,7 +9,7 @@ import { tokenService } from "./tokenService"
 export type LoginRegistrationResponseType = {
   accessToken: string
   refreshToken: string
-  user: { id: ObjectId; email: string; isActivated: boolean }
+  user: { id: ObjectId; email: string; isActivated: boolean; role: Role }
 }
 export const authService = {
   async registration(email: string, password: string): Promise<LoginRegistrationResponseType | undefined> {
@@ -21,12 +21,12 @@ export const authService = {
     const activationLink = v4()
     const user = await UserModel.create({ email, password: hashPassword, activationLink })
     await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
-    const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated })
+    const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated, role: user.role })
     const refToken = tokens.refreshToken
     await tokenService.saveToken(user._id, refToken)
     return {
       ...tokens,
-      user: { id: user.id, email: user.email!, isActivated: user.isActivated },
+      user: { id: user.id, email: user.email!, isActivated: user.isActivated, role: user.role },
     }
   },
 
@@ -39,12 +39,12 @@ export const authService = {
     if (!isPassEquals) {
       throw ApiError.BadRequest(`Incorrect password`)
     }
-    const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated })
+    const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated, role: user.role })
     const refToken = tokens.refreshToken
     await tokenService.saveToken(user._id, refToken)
     return {
       ...tokens,
-      user: { id: user.id, email: user.email!, isActivated: user.isActivated },
+      user: { id: user.id, email: user.email!, isActivated: user.isActivated, role: user.role },
     }
   },
 
@@ -73,12 +73,12 @@ export const authService = {
     }
     const user = await UserModel.findById(tokenFromDb.user?._id)
     if (user) {
-      const tokens = await tokenService.generateTokens({ email: user.email!, id: user?._id, isActivated: user?.isActivated })
+      const tokens = await tokenService.generateTokens({ email: user.email!, id: user?._id, isActivated: user?.isActivated, role: user.role })
       const refToken = tokens.refreshToken
       await tokenService.saveToken(user?._id, refToken)
       return {
         ...tokens,
-        user: { id: user.id, email: user.email!, isActivated: user.isActivated },
+        user: { id: user.id, email: user.email!, isActivated: user.isActivated, role: user.role },
       }
     }
   },

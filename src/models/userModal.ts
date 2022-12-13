@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose"
+export type Role = "admin" | "user"
 const UserScema = new Schema({
   email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
