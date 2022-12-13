@@ -2,10 +2,9 @@ import bcrypt from "bcrypt"
 import { ObjectId } from "mongodb"
 import { v4 } from "uuid"
 import { UserModel } from "../models/userModal"
+import { ApiError } from "../utils/api-errors/api-error"
 import { mailService } from "./mailService"
 import { tokenService } from "./tokenService"
-import { ApiError } from "../utils/api-errors/api-error"
-import { EnumType } from "typescript"
 
 export type LoginRegistrationResponseType = {
   accessToken: string
