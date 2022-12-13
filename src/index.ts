@@ -12,8 +12,8 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
-app.get("/", (req, res) => {
-  res.send("Hello world")
+app.use("/", (req, res) => {
+  res.send(`Recomendations App\nStart page`)
 })
 app.use("/api", authRouter)
 app.use(errorMiddleware)
