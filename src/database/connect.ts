@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 require("dotenv").config()
 
-const MONGO_URI = process.env.MONGO_PROD_URI ? process.env.MONGO_PROD_URI : process.env.MONGO_LOCAL_URI
+const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : process.env.MONGO_LOCAL_URI
 export const connectMongoDb = async () => {
   try {
     mongoose.set("strictQuery", false)

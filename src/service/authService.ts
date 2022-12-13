@@ -19,7 +19,7 @@ export const authService = {
     }
     const hashPassword = await bcrypt.hash(password, 3)
     const activationLink = v4()
-    const user = await UserModel.create({ email, password: hashPassword, activationLink })
+    const user = await UserModel.create({ email, password: hashPassword, activationLink, role: "admin" })
     await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
     const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated, role: user.role })
     const refToken = tokens.refreshToken

@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send(`Recomendations App\nStart page`)
 })
 app.use("/api", authRouter)
