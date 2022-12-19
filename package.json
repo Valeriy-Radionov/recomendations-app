@@ -26,8 +26,6 @@
     "nanoid": "^4.0.0",
     "nodemailer": "^6.8.0",
     "ts-node-dev": "^2.0.0",
-    "tsc": "^2.0.4",
-    "typescript": "^4.9.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -38,8 +36,8 @@
     "@types/node": "^18.11.12",
     "node": "16.13.0",
     "nodemon": "^2.0.20",
-    "vercel": "^28.7.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "vercel": "^28.7.0"
   },
   "scripts": {
     "watch": "tsc -w",

@@ -16,7 +16,7 @@ export const tokenService = {
   async generateTokens(payload: PayloadType): Promise<GenerateTokenType> {
     const accToken = process.env.JWT_ACCESS_SECRET
     const refToken = process.env.JWT_REFRESH_SECRET
-    const accessToken = jwt.sign(payload, accToken!, { expiresIn: "30m" })
+    const accessToken = jwt.sign(payload, accToken!, { expiresIn: "2d" })
     const refreshToken = jwt.sign(payload, refToken!, { expiresIn: "30d" })
     return { accessToken, refreshToken }
   },

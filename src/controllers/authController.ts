@@ -3,13 +3,13 @@ import { validationResult } from "express-validator"
 import { authService, LoginRegistrationResponseType } from "../service/authService"
 const ApiError = require("../utils/api-errors/api-error")
 
-type RegistrationRequestType = {
+type AuthRequestType = {
   email: string
   password: string
 }
 
 export const authController = {
-  async registration(request: Request<RegistrationRequestType>, response: Response<LoginRegistrationResponseType>, next: NextFunction) {
+  async registration(request: Request<AuthRequestType>, response: Response<LoginRegistrationResponseType>, next: NextFunction) {
     try {
       const errors = validationResult(request)
       if (!errors.isEmpty()) {
@@ -27,7 +27,7 @@ export const authController = {
     }
   },
 
-  async login(request: Request, response: Response, next: NextFunction) {
+  async login(request: Request<AuthRequestType>, response: Response<LoginRegistrationResponseType>, next: NextFunction) {
     try {
       const { email, password } = request.body
       const userData = await authService.login(email, password)

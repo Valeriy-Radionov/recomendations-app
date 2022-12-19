@@ -25,4 +25,19 @@ export const mailService = {
       </div>`,
     })
   },
+
+  async sendFeedBackMail(from: string, senderName: string, message: string) {
+    const tramsporter = await this.transporter()
+    tramsporter.sendMail({
+      from: from,
+      to: process.env.SMTP_USER_FEEDBACK_FORM,
+      subject: "HR MESSAGE",
+      text: "",
+      html: `<div>
+      <h1>Вам пришло письмо от ${senderName}</h1>
+      <p>Email: ${from}</p>
+      <p>${message}</p>
+      </div>`,
+    })
+  },
 }

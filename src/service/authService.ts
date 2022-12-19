@@ -9,7 +9,7 @@ import { tokenService } from "./tokenService"
 export type LoginRegistrationResponseType = {
   accessToken: string
   refreshToken: string
-  user: { id: ObjectId; email: string; isActivated: boolean; role: Role }
+  user: { id: string; email: string; isActivated: boolean; role: Role }
 }
 export const authService = {
   async registration(email: string, password: string): Promise<LoginRegistrationResponseType | undefined> {
@@ -19,7 +19,7 @@ export const authService = {
     }
     const hashPassword = await bcrypt.hash(password, 3)
     const activationLink = v4()
-    const user = await UserModel.create({ email, password: hashPassword, activationLink, role: "admin" })
+    const user = await UserModel.create({ email, password: hashPassword, activationLink })
     await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
     const tokens = await tokenService.generateTokens({ email: user.email!, id: user._id, isActivated: user.isActivated, role: user.role })
     const refToken = tokens.refreshToken
