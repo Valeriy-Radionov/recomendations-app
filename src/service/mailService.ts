@@ -29,7 +29,7 @@ export const mailService = {
   async sendFeedBackMail(from: string, senderName: string, message: string) {
     const tramsporter = await this.transporter()
     tramsporter.sendMail({
-      from: from,
+      from: process.env.SMTP_USER,
       to: process.env.SMTP_USER_FEEDBACK_FORM,
       subject: "HR MESSAGE",
       text: "",

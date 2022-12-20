@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { authController } from "../controllers/authController"
+import { feedbackController } from "../controllers/feedBackController"
 import { authMiddleware } from "../middlewares/auth-middleware"
 import { isEmail, passwordIsrequired } from "../utils/validators/registerValidators"
 
