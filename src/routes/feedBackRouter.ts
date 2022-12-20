@@ -3,4 +3,4 @@ import { feedbackController } from "../controllers/feedBackController"
 import { isEmail } from "../utils/validators/registerValidators"
 
 export const feedBackRouter = Router({})
-feedBackRouter.post("/feedback", isEmail, feedbackController.feedbackMessage)
+feedBackRouter.post("/", isEmail, feedbackController.feedbackMessage)

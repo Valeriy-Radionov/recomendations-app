@@ -19,10 +19,10 @@ app.use(
   })
 )
 app.get("/", (req, res) => {
-  res.send(`Recomendations App\nStart page`)
+  res.send(`Recomendations App`)
 })
 app.use("/api", authRouter)
-app.use("/api", feedBackRouter)
+app.use("/feedback", feedBackRouter)
 app.use(errorMiddleware)
 const start = async () => {
   try {
