@@ -19,7 +19,7 @@ app.use(
   })
 )
 app.get("/", (req, res) => {
-  res.json(`Recomendations App`)
+  res.send(`Recomendations App`)
 })
 app.use("/api", authRouter)
 app.use("/feedback", feedBackRouter)
